@@ -34,23 +34,42 @@ class _QuizPageState extends State<QuizPage> {
   void checkAnswer(bool userPick) {
     bool correctAnser = quizbrain.getQuestionAnswer();
 
-    setState(() {
-      if (userPick == correctAnser) {
-        scoreKepper.add(
-          Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
-        );
-      } else {
-        scoreKepper.add(
-          Icon(
-            Icons.close,
-            color: Colors.red,
-          ),
-        );
-      }
-    });
+    if (quizbrain.canContinue) {
+      setState(() {
+        if (userPick == correctAnser) {
+          scoreKepper.add(
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        } else {
+          scoreKepper.add(
+            Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          );
+        }
+        quizbrain.nextQuestion();
+      });
+    } else {
+      Alert(
+        context: context,
+        title: "Quiz Finished",
+        desc: "You've reached the end of the quiz",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Okay",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
   }
 
   @override

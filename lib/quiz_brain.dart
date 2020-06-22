@@ -2,6 +2,7 @@ import 'question.dart';
 
 class Quizbrain {
   int _questionNo = 0;
+  bool canContinue = true;
 
   List<Question> _questionBank = [
     Question('Some cats are actually allergic to humans', true),
@@ -34,6 +35,8 @@ class Quizbrain {
   void nextQuestion() {
     if (_questionNo < _questionBank.length - 1) {
       _questionNo++;
+    } else {
+      canContinue = false;
     }
   }
 
